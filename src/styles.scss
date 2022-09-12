@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+    font-family: 'Cairo';
+}
+
+:lang(en) {
+    body {
+        font-family: 'Gotham';
+        font-weight: 300!important;
+    }
+}
+
+
+.cursorPointer {
+    cursor: pointer;
+}
+textarea {
+    resize: none;
+}
+.siteCard {
+    box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+    border-radius: 15px;
+    max-width: 700px;;
+}

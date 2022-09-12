@@ -28,6 +28,9 @@
               "src/assets"
             ],
             "styles": [
+              "src/assets/fontawesome/css/all.min.css",
+              "src/assets/fonts/fonts.scss",
+              "src/assets/scss/theme-colors.scss",
               "src/styles.scss"
             ],
             "scripts": []
@@ -103,5 +106,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

@@ -1,0 +1,185 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div [@openClose]="isOpen ? 'open' : 'closed'" class="col-12 col-md-10 siteCard bg-white p-5">
+            <form [formGroup]="userInfo" *ngIf="!startSurvey" (ngSubmit)="submit()" class="row justify-content-center g-3 needs-validation" autocomplete="off"  novalidate>
+                <div class="col-12 col-md-6 mb-3 position-relative">
+                    <label for="mobile" class="form-label">{{ "MobileNumber" | translate }}</label>
+                    <input type="text" maxlength="11" class="form-control fw-light" formControlName="mobile" id="mobile" required>
+                    <div *ngIf="fromSubmitted && fc['mobile'].invalid" class="invalid-feedback" [ngStyle]="{'display': true ? 'block' : '' }">
+                    <span *ngIf="fc['mobile'].errors?.['required']">{{ "MobileIsRequired" | translate }}</span>
+                    <span *ngIf="fc['mobile'].errors?.['pattern']">{{ "InvalidMobile" | translate }}</span>
+                    </div>
+                </div>
+                
+                <div class="col-12 col-md-6 mb-3 position-relative">
+                    <label for="serviceType" class="form-label">{{ "ServiceType" | translate }}</label>
+                    <select class="form-select fw-light" formControlName="serviceType" id="serviceType" required>
+                        <option class="fw-light" selected disabled value="">...</option>
+                        <option class="fw-light" value="{{'NewContract' | translate}}">{{ "NewContract" | translate }}</option>
+                        <option class="fw-light" value="{{'PaySubscription' | translate}}">{{ "PaySubscription" | translate }}</option>
+                        <option class="fw-light" value="{{'CancelService' | translate}}">{{ "CancelService" | translate }}</option>
+                        <option class="fw-light" value="{{'ReceivingPapers' | translate}}">{{ "ReceivingPapers" | translate }}</option>
+                        <option class="fw-light" value="{{'ContractRenewal' | translate}}">{{ "ContractRenewal" | translate }}</option>
+                        <option class="fw-light" value="{{'DirectDebitForm' | translate}}">{{ "DirectDebitForm" | translate }}</option>
+                        <option class="fw-light" value="{{'InquiriesAboutServices' | translate}}">{{ "InquiriesAboutServices" | translate }}</option>
+                        <option class="fw-light" value="{{'TechnicalSupport' | translate}}">{{ "TechnicalSupport" | translate }}</option>
+                        <option class="fw-light" value="{{'Other' | translate}}">{{ "Other" | translate }}</option>
+                    </select>
+                    <div *ngIf="fromSubmitted && fc['serviceType'].invalid" class="invalid-feedback" [ngStyle]="{'display': true ? 'block' : '' }">
+                        <span *ngIf="fc['serviceType'].errors?.['required']">{{ "SelectServiceType" | translate }}</span>
+                    </div>
+                </div>
+        
+                <div class="col-12 col-md-6 mb-3">
+                    <label for="customerName" class="form-label">{{ "Name" | translate }}</label>
+                    <input type="text" formControlName="customerName" class="form-control fw-light" id="customerName">
+                </div>
+        
+                <div class="col-12 col-md-6 mb-3">
+                    <label for="CompanyName" class="form-label">{{ "CompanyName" | translate }}</label>
+                    <input type="text" formControlName="companyName" class="form-control fw-light" id="CompanyName">
+                </div>
+                
+                <div class="col-12 text-center">
+                    <button class="btn btn-secondary fw-light fs-5 px-5 text-white" type="submit">{{"Next" | translate}}</button>
+                </div>
+            </form>
+            <div class="row justify-content-center" *ngIf="startSurvey">
+                <div class="col-12">
+                    <div class="questionUnit text-center" *ngIf="receptionistRating">
+                        <h5 class="mb-4 lh-base fw-light">{{"ReceptionistRating" | translate}}</h5>
+                        <div class="emojis d-flex justify-content-center">
+                            <div class="mx-2 emoji">
+                                <input class="d-none" type="radio" id="receptionistRatingGrin" name="receptionist-rating" value="5" (change)="addUserAnswer(1, $event, 'receptionistRating', 'facial')">
+                                <label for="receptionistRatingGrin"><i class="fa-solid fa-face-grin"></i></label>
+                            </div>
+                            <div class="mx-2 emoji">
+                                <input class="d-none" type="radio" id="receptionistRatingSmile" name="receptionist-rating" value="4" (change)="addUserAnswer(1, $event, 'receptionistRating', 'facial')">
+                                <label for="receptionistRatingSmile"><i class="fa-solid fa-face-smile"></i></label>
+                            </div>
+                            <div class="mx-2 emoji">
+                                <input class="d-none" type="radio" id="receptionistRatingMeh" name="receptionist-rating" value="3" (change)="addUserAnswer(1, $event, 'receptionistRating', 'facial')">
+                                <label for="receptionistRatingMeh"><i class="fa-solid fa-face-meh"></i></label>
+                            </div>
+                            <div class="mx-2 emotion">
+                                <input class="d-none" type="radio" id="receptionistRatingFrown" name="receptionist-rating" value="2" (change)="addUserAnswer(1, $event, 'receptionistRating', 'facial')">
+                                <label for="receptionistRatingFrown"><i class="fa-solid fa-face-frown"></i></label>
+                            </div>
+                            <div class="mx-2 emoji">
+                                <input class="d-none" type="radio" id="receptionistRatingAngry" name="receptionist-rating" value="1" (change)="addUserAnswer(1, $event, 'receptionistRating', 'facial')">
+                                <label for="receptionistRatingAngry"><i class="fa-solid fa-face-angry"></i></label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="questionUnit text-center" *ngIf="employeeEvaluation">
+                        <h5 class="mb-4 lh-base fw-light">{{"EmployeeEvaluation" | translate}}</h5>
+                        <div class="emojis d-flex justify-content-center">
+                            <div class="mx-2 emoji">
+                                <input class="d-none" type="radio" id="employeeEvaluationGrin" name="employee-evaluation" value="5" (change)="addUserAnswer(2, $event, 'employeeEvaluation', 'facial')">
+                                <label for="employeeEvaluationGrin"><i class="fa-solid fa-face-grin"></i></label>
+                            </div>
+                            <div class="mx-2 emoji">
+                                <input class="d-none" type="radio" id="employeeEvaluationSmile" name="employee-evaluation" value="4" (change)="addUserAnswer(2, $event, 'employeeEvaluation', 'facial')">
+                                <label for="employeeEvaluationSmile"><i class="fa-solid fa-face-smile"></i></label>
+                            </div>
+                            <div class="mx-2 emoji">
+                                <input class="d-none" type="radio" id="employeeEvaluationMeh" name="employee-evaluation" value="3" (change)="addUserAnswer(2, $event, 'employeeEvaluation', 'facial')">
+                                <label for="employeeEvaluationMeh"><i class="fa-solid fa-face-meh"></i></label>
+                            </div>
+                            <div class="mx-2 emotion">
+                                <input class="d-none" type="radio" id="employeeEvaluationFrown" name="employee-evaluation" value="2" (change)="addUserAnswer(2, $event, 'employeeEvaluation', 'facial')">
+                                <label for="employeeEvaluationFrown"><i class="fa-solid fa-face-frown"></i></label>
+                            </div>
+                            <div class="mx-2 emoji">
+                                <input class="d-none" type="radio" id="employeeEvaluationAngry" name="employee-evaluation" value="1" (change)="addUserAnswer(2, $event, 'employeeEvaluation', 'facial')">
+                                <label for="employeeEvaluationAngry"><i class="fa-solid fa-face-angry"></i></label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="questionUnit text-center" *ngIf="evaluateOurService">
+                        <h5 class="mb-4 lh-base fw-light">{{"EvaluateOurService" | translate}}</h5>
+                        <div class="emojis d-flex justify-content-center">
+                            <div class="mx-2 emoji">
+                                <input class="d-none" type="radio" id="evaluateOurServiceGrin" name="evaluate-our-service" value="5" (change)="addUserAnswer(3, $event, 'evaluateOurService', 'facial')">
+                                <label for="evaluateOurServiceGrin"><i class="fa-solid fa-face-grin"></i></label>
+                            </div>
+                            <div class="mx-2 emoji">
+                                <input class="d-none" type="radio" id="evaluateOurServiceSmile" name="evaluate-our-service" value="4" (change)="addUserAnswer(3, $event, 'evaluateOurService', 'facial')">
+                                <label for="evaluateOurServiceSmile"><i class="fa-solid fa-face-smile"></i></label>
+                            </div>
+                            <div class="mx-2 emoji">
+                                <input class="d-none" type="radio" id="evaluateOurServiceMeh" name="evaluate-our-service" value="3" (change)="addUserAnswer(3, $event, 'evaluateOurService', 'facial')">
+                                <label for="evaluateOurServiceMeh"><i class="fa-solid fa-face-meh"></i></label>
+                            </div>
+                            <div class="mx-2 emotion">
+                                <input class="d-none" type="radio" id="evaluateOurServiceFrown" name="evaluate-our-service" value="2" (change)="addUserAnswer(3, $event, 'evaluateOurService', 'facial')">
+                                <label for="evaluateOurServiceFrown"><i class="fa-solid fa-face-frown"></i></label>
+                            </div>
+                            <div class="mx-2 emoji">
+                                <input class="d-none" type="radio" id="evaluateOurServiceAngry" name="evaluate-our-service" value="1" (change)="addUserAnswer(3, $event, 'evaluateOurService', 'facial')">
+                                <label for="evaluateOurServiceAngry"><i class="fa-solid fa-face-angry"></i></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="questionUnit text-center" *ngIf="recommendUs">
+                        <h5 class="mb-4 lh-base fw-light">{{"RecommendUs" | translate}}</h5>
+                        <div class="emojis d-flex justify-content-center">
+                            <div class="mx-2 emoji">
+                                <input class="d-none" type="radio" id="recommendUsGrin" name="recommend-us" value="5" (change)="addUserAnswer(4, $event, 'recommendUs', 'facial')">
+                                <label for="recommendUsGrin"><i class="fa-solid fa-face-grin"></i></label>
+                            </div>
+                            <div class="mx-2 emoji">
+                                <input class="d-none" type="radio" id="recommendUsSmile" name="recommend-us" value="4" (change)="addUserAnswer(4, $event, 'recommendUs', 'facial')">
+                                <label for="recommendUsSmile"><i class="fa-solid fa-face-smile"></i></label>
+                            </div>
+                            <div class="mx-2 emoji">
+                                <input class="d-none" type="radio" id="recommendUsMeh" name="recommend-us" value="3" (change)="addUserAnswer(4, $event, 'recommendUs', 'facial')">
+                                <label for="recommendUsMeh"><i class="fa-solid fa-face-meh"></i></label>
+                            </div>
+                            <div class="mx-2 emotion">
+                                <input class="d-none" type="radio" id="recommendUsFrown" name="recommend-us" value="2" (change)="addUserAnswer(4, $event, 'recommendUs', 'facial')">
+                                <label for="recommendUsFrown"><i class="fa-solid fa-face-frown"></i></label>
+                            </div>
+                            <div class="mx-2 emoji">
+                                <input class="d-none" type="radio" id="recommendUsAngry" name="recommend-us" value="1" (change)="addUserAnswer(4, $event, 'recommendUs', 'facial')">
+                                <label for="recommendUsAngry"><i class="fa-solid fa-face-angry"></i></label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row" *ngIf="recommendedDetails">
+                        <div class="col-12 col-sm-12 col-md-6 mb-3">
+                            <label for="RecommendedName" class="form-label">{{ "RecommendedName" | translate }}</label>
+                            <input ngModel name="recommendedName" #recommendedName="ngModel" type="text" class="form-control fw-light" id="RecommendedName">
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 mb-3">
+                            <label for="RecommendedPhone" class="form-label">{{ "RecommendedPhone" | translate }}</label>
+                            <input ngModel name="recommendedPhone" #recommendedPhone="ngModel" type="text" class="form-control fw-light" id="RecommendedPhone">
+                        </div>
+                        <div class="col-12 text-center mt-3">
+                            <button class="btn btn-secondary fw-light fs-5 px-5 text-white" (click)="recommendedInfo(recommendedName.viewModel, 5, 'text', recommendedPhone.viewModel, 6, 'text')">
+                                {{"Next" | translate}}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="complaintsAndSuggestions">
+                        <div class="col-12 mb-3">
+                            <label for="complaintsAndSuggestions" class="form-label">{{ "ComplaintsAndSuggestions" | translate }}</label>
+                            <textarea ngModel name="complaintsAndSuggestions" #complaintsAndSuggestions="ngModel" type="text" class="form-control fw-light" rows="4" id="ComplaintsAndSuggestions"></textarea>
+                        </div>
+                        <div class="col-12 text-center mt-3">
+                            <button class="btn btn-secondary fw-light fs-5 px-5 text-white" [disabled]="sendSurvey" (click)="submitSurvey(complaintsAndSuggestions.viewModel, 7, 'text')">
+                                {{"Send" | translate}}
+                            </button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div [@openClose]="isOpen ? 'open' : 'closed'" class="col-12 col-md-10 siteCard bg-white p-5 text-center">
+            <p class="fw-light fs-4 mb-4 lh-base">{{"SurveyIntro" | translate}}</p>
+            <button class="btn btn-secondary fw-light fs-4 px-5 text-white" (click)="startSurvey()">{{"Start" | translate}}</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+
+// $theme-colors:map-merge($theme-colors, (
+//   "withe": $withe,
+//   "grey": $grey,
+// ));
+$line-height-base: 1.8;
+$primary: #002c6c;
+$secondary: #f26234;
+$success: #00AC4A;
+$danger: #dc3545;
+$warning: #f5821f;
+$info: #0095da;
+$white: #ffffff;
+$grey: #E5E8EB;
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "grey": $grey,
+  "withe": $white
+);
+
+
+@import "../../../node_modules/bootstrap-scss/bootstrap";
